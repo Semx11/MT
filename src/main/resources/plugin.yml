@@ -1,0 +1,68 @@
+name: MinetopiaTools
+main: me.semx11.mt.MinetopiaTools
+version: 0.0.1
+author: Semx11
+depend: [PowerNBT]
+loadbefore: [PowerNBT]
+commands:
+  customitem:
+    usage: /<command> <player> <customitem> [amount] [isPrivate]
+    description: Give a custom item to a player.
+    aliases: [ci, citem]
+  staffchat:
+    usage: /<command> <message>
+    description: Simple chat for staff-related messages.
+    aliases: [sc]
+  minetopiatools:
+    usage: /<command> <rename>
+    description: Various plugin-related commands bundled together.
+    aliases: [mt, mtools]
+  trackpets:
+    usage: /<command> [player]
+    description: Find your or others' pets.
+  rename:
+    usage: /<command> <name>
+    description: Rename the item in your hand.
+  getop:
+    usage: /<command>
+
+permissions:
+  mt.*:
+    description: All permissions for this plugin.
+    children:
+      mt.tools: true
+      mt.customitem: true
+      mt.staffchat: true
+      mt.trackpets: true
+      mt.rename: true
+      mt.anvil: true
+      mt.uproot: true
+  mt.tools:
+    description: Permission for all /minetopiatools functions.
+    children:
+      mt.tools.reload: true
+      mt.tools.update: true
+      mt.tools.broadcast: true
+      mt.tools.restart: true
+  mt.tools.reload:
+    description: /minetopiatools reload - reload the config.
+  mt.tools.broadcast:
+    description: /minetopiatools broadcast - broadcast a server-wide message in chat.
+  mt.tools.restart:
+    description: /minetopiatools restart - restart the server with a 5 minute countdown.
+  mt.customitem:
+    description: /customitem - give custom items to yourself and others.
+  mt.staffchat:
+    description: /staffchat - talk with other staff members in a private chat.
+  mt.trackpets:
+    description: /trackpets & /trackpets <player> - locate your and others' pets.
+    children:
+      mt.trackpets.self: true
+  mt.trackpets.self:
+    description: /trackpets - locate your pets.
+  mt.rename:
+    description: /rename - rename any item, except custom items.
+  mt.anvil:
+    description: Permission to use anvils.
+  mt.uproot:
+    description: Permission to uproot crops.

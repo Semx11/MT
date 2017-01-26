@@ -1,0 +1,26 @@
+# MinetopiaTools v0.0.1 - By Semx11.
+# Use an ampersand (&) for String formatting.
+# Strings should always be surrounded with apostrophes ('Example').
+# Escape an apostrophe like so: 'Oh no, it''s escaped!'
+# Variables look like this: '{variable}'.
+#
+# Available variables:
+# >> commands.staffchat.prefix:
+# > {name} - The name of the staff member.
+
+chat:
+  colors:
+    error: '&c'
+    success: '&a'
+  errors:
+    no_permission: 'You don''t have permission!'
+    not_player: 'You must be a player to use this command!'
+commands:
+  staffchat:
+    prefix: '&b[STAFF]&r ${name} &8>&b ${message}'
+  minetopiatools:
+    colors:
+      accent: '&3'
+      light_accent: '&b'
+      main: '&7'
+      dark_main: '&8'
