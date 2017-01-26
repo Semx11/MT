@@ -65,29 +65,18 @@ public class CommandCustomItem extends ACommandBase {
                 ComponentBuilder componentBuilder = new ComponentBuilder("");
                 Iterator<CustomItem> customItems = CustomItem.sortedValues().iterator();
 
-                int totalBytes = 0;
+                int counter = 0;
                 while (customItems.hasNext()) {
                     CustomItem customItem = customItems.next();
 
-                    int tagBytes = 0;
-                    try {
-                        tagBytes = customItem.getItemTag().getBytes("UTF-32").length;
-                    } catch (UnsupportedEncodingException e1) {
-                        e1.printStackTrace();
-                    }
-
-                    // Minecraft only supports components up to 2^15-1 bytes. If it hits this limit,
-                    // it will send the current component and continue with a new one.
-
-                    System.out.println("totalBytes: " + totalBytes);
-                    System.out.println("tagBytes: " + tagBytes);
-                    System.out.println("totalBytes + tagBytes: " + (totalBytes + tagBytes));
-                    if (totalBytes + tagBytes > 32767) {
+                    // Minecraft only supports components up to 2^15-1 bytes. To prevent it from
+                    // hitting this limit (and crashing the client), it will send three CustomItems
+                    // per message.
+                    if (counter > 3) {
                         ((Player) sender).spigot().sendMessage(componentBuilder.create());
                         componentBuilder = new ComponentBuilder("");
-                        totalBytes = 0;
+                        counter = 0;
                     }
-                    totalBytes += tagBytes;
                     BaseComponent[] itemMessage = new BaseComponent[]{
                             new TextComponent(customItem.getItemTag())};
                     componentBuilder.append(customItem.toString())
@@ -96,6 +85,7 @@ public class CommandCustomItem extends ACommandBase {
                     if (customItems.hasNext()) {
                         componentBuilder.append(", ");
                     }
+                    counter++;
                 }
 
                 ((Player) sender).spigot().sendMessage(componentBuilder.create());

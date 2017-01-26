@@ -94,17 +94,17 @@ public class MinetopiaTools extends JavaPlugin {
         // A 'semi-singleton'.
         INSTANCE = this;
 
-        getConfig().options().copyDefaults(true);
-        saveConfig();
+        this.getConfig().options().copyDefaults(true);
+        this.saveConfig();
 
         // Some CustomItems use the PowerNBT API to modify the NBT data with ease.
         nbtManager = PowerNBT.getApi();
         // The minecraftBlocks array is created for CustomItems that can be placed on everything,
         // and should have all available blocks in the CanPlaceOn tag.
-        minecraftBlocks = createRegistryArray("Block");
-        minecraftItems = createRegistryArray("Item");
+        minecraftBlocks = this.createRegistryArray("Block");
+        minecraftItems = this.createRegistryArray("Item");
 
-        registerCommands(
+        this.registerCommands(
                 CommandCustomItem.getInstance(),
                 CommandMinetopiaTools.getInstance(),
                 CommandStaffChat.getInstance(),
@@ -113,7 +113,7 @@ public class MinetopiaTools extends JavaPlugin {
                 CommandTrackPets.getInstance()
         );
 
-        registerEvents(
+        this.registerEvents(
                 EventBlockBreak.getInstance(),
                 EventLeftClickEntity.getInstance(),
                 EventRightClickEntity.getInstance(),
@@ -131,13 +131,13 @@ public class MinetopiaTools extends JavaPlugin {
 
     private void registerCommands(ACommandBase... commands) {
         Arrays.stream(commands).forEach(cmd -> {
-            getCommand(cmd.getCommandName()).setExecutor(cmd);
-            getCommand(cmd.getCommandName()).setTabCompleter(cmd);
+            this.getCommand(cmd.getCommandName()).setExecutor(cmd);
+            this.getCommand(cmd.getCommandName()).setTabCompleter(cmd);
         });
     }
 
     private void registerEvents(Listener... events) {
-        PluginManager pm = getServer().getPluginManager();
+        PluginManager pm = this.getServer().getPluginManager();
         Arrays.stream(events).forEach(event -> {
             pm.registerEvents(event, this);
         });
@@ -145,8 +145,8 @@ public class MinetopiaTools extends JavaPlugin {
 
     /**
      * Obtain all Minecraft blocks and items and store them in a String array using NMS and Reflection.
-     * @param classname The NMS Classname which contains a REGISTRY.
-     * @return String[] of the REGISTRY.
+     * @param classname The NMS Classname which contains a 'REGISTRY'.
+     * @return String[] of the 'REGISTRY'.
      */
     private String[] createRegistryArray(String classname) {
         try {
